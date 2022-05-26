@@ -21,7 +21,9 @@ def start(message):
     button1 = types.KeyboardButton("Добавить игрока")
     button2 = types.KeyboardButton("Закончить игру")
     keyboard_menu.add(button1, button2)
-    bot.send_message(message.chat.id, 'Привет, я рад тебя видеть! \nПриступим к игре!', reply_markup=keyboard_menu)
+    bot.send_message(message.chat.id, 'Привет! Я бот-ведущий для игры в "Правда или Действие" \n\n' +
+                     'Я создан чтобы экономить ваше время, поэтому я буду придумывать вопросы за вас! \n' +
+                                      '\nСкорее добавляй игроков и приступим же к игре!', reply_markup=keyboard_menu)
 
 
 @bot.message_handler(content_types='text')
@@ -70,7 +72,7 @@ def process_name_step(message):
         msg = bot.send_message(message.chat.id, 'Сколько лет игроку')
         bot.register_next_step_handler(msg, process_age_step)
     except Exception as e:
-        bot.reply_to(message, 'разработчик полный лох')
+        bot.reply_to(message, 'Что-то пошло не по плану!')
 
 
 def process_age_step(message):
@@ -143,7 +145,7 @@ def process_delete(user_name):
         bot.send_message(chat_id, "Что делаем дальше?", reply_markup=keyboard_menu)
         cursor.close()
     except Exception as e:
-        bot.send_message(user_name.chat.id, 'разработчик полный лох или такого игрока нет')
+        bot.send_message(user_name.chat.id, 'такого игрока нет!')
 
 
 def select_all_users(user_name):
@@ -250,5 +252,3 @@ def game_is_end(user_message):
 
 
 bot.infinity_polling()
-
-
